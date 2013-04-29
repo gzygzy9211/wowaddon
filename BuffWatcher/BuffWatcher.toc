@@ -1,0 +1,8 @@
+## Interface: 50200
+## Version: 0.0.2
+## Author: Wing
+## Title: Buff Watcher
+## Notes: Show buff/debuff on you
+## SavedVariablesPerCharacter: BuffWatcherData
+
+BuffWatcher.xml

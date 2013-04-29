@@ -1,0 +1,8 @@
+## Interface: 50200
+## Version: 0.0.2
+## Author: Wing
+## Title: It is Ready
+## Notes: Show you which spell is ready
+## SavedVariablesPerCharacter: ItIsReadyData
+
+ItIsReady.xml
