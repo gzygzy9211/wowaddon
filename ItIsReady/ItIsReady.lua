@@ -22,6 +22,14 @@ elseif PlayerClass == "PALADIN" then
 	--IRmainframe.Icons = {35395, 53595, 20271, 879}
 end
 
+local IconPosition = {}
+local i, j
+for i = 1, 10 do 
+	for j = 1, 4 do 
+		table.insert(IconPosition, {i*64, j*64})
+	end
+end
+
 IRmainframe:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 IRmainframe:RegisterEvent("PLAYER_LOGIN")
 IRmainframe:RegisterEvent("ADDON_LOADED")
@@ -49,6 +57,9 @@ IRmainframe.HandleFunc = {
 				Spells = {}
 			}
 		end
+		if ItIsReadyData.Position == nil then
+			ItIsReadyData.Position = {X = 0, Y = 0}
+		end
 		if ItIsReadyData.CurrentGroupName ~= "" then 
 			ItIsReadyData.CurrentGroup = ItIsReadyData.Spells[ItIsReadyData.CurrentGroupName]
 		end
@@ -66,10 +77,14 @@ IRmainframe.HandleFunc = {
 		end
 		IRmainframe.Icons = {}
 		--table.setn(IRmainframe.Icons, table.getn(IRmainframe.Spells))
+		IRmainframe.Position = CreateFrame("Frame", nil, IRmainframe)
+		IRmainframe.Position:SetHeight(480)
+		IRmainframe.Position:SetWidth(256)
+		IRmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", ItIsReadyData.Position.X, ItIsReadyData.Position.Y)
 		for i,v in pairs(IRmainframe.Spells) do
 			--print(v)
 			
-			IRmainframe.Icons[i] = CreateFrame("Frame", nil, IRmainframe)
+			IRmainframe.Icons[i] = CreateFrame("Frame", nil, IRmainframe.Position)
 			IRmainframe.Icons[i]:SetWidth(64)
 			IRmainframe.Icons[i]:SetHeight(64)
 			IRmainframe.Icons[i]:SetBackdrop({ 
@@ -80,10 +95,9 @@ IRmainframe.HandleFunc = {
 			})
 			IRmainframe.Icons[i]:SetBackdropColor(0, 0, 0, 0)
 			IRmainframe.Icons[i]:SetBackdropBorderColor(0, 0, 0, 0)
-			IRmainframe.Icons[i]:SetPoint("CENTER", UIParent, "CENTER", 64*i, 64)
+			IRmainframe.Icons[i]:SetPoint("CENTER", IRmainframe.Position, "CENTER", IconPosition[i][2], IconPosition[i][1])
 			local name, _, icon = GetSpellInfo(v)
 			
-			--print(icon)
 			IRmainframe.Icons[i].texture = IRmainframe.Icons[i]:CreateTexture(nil, "ARTWORK")
 			IRmainframe.Icons[i].texture:SetTexture(icon)
 			IRmainframe.Icons[i].texture:SetPoint("CENTER", IRmainframe.Icons[i], "CENTER", 0,0)
@@ -139,5 +153,4 @@ IRmainframe.HandleFunc = {
 	end
 
 }
-
 
