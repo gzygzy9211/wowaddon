@@ -1,0 +1,8 @@
+## Interface: 50300
+## Version: 0.0.1
+## Author: Wing
+## Title: lua Console
+## Notes: allows you to directly type lua script and run it in WOW
+## SavedVariablesPerCharacter: ConsoleData
+
+Console.xml
