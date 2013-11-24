@@ -44,6 +44,21 @@ SlashCmdList["BUFFWATCHER"] = function (...)
 	elseif arg == "debug" then 
 		BuffWatcherData._debug = not BuffWatcherData._debug
 		print(BuffWatcherData._debug)
+	elseif arg == "setX" then 
+		local func = BWmainframe.SlashHandleFunc["setX"]
+		if func(var) then 
+			print("succeeded")
+		end
+	elseif arg == "setY" then 
+		local func = BWmainframe.SlashHandleFunc["setY"]
+		if func(var) then 
+			print("succeeded")
+		end
+	elseif arg == "setAlpha" then 
+		local func = BWmainframe.SlashHandleFunc["setAlpha"]
+		if func(var) then
+			print("succeeded")
+		end
 	else
 		print(help_info1)
 		print(help_info2)
@@ -150,6 +165,40 @@ BWmainframe.SlashHandleFunc = {
 			print("No such group exists")
 			return false
 		end
+	end,
+	
+	setX = function(var)
+		if tonumber(var) == nil then 
+			print("Please input a number")
+			return false
+		end
+		var = tonumber(var)
+		BuffWatcherData.Position.X = var
+		BWmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", BuffWatcherData.Position.X, BuffWatcherData.Position.Y)
+	end,
+	
+	setY = function(var)
+		if tonumber(var) == nil then 
+			print("Please input a number")
+			return false
+		end
+		var = tonumber(var)
+		BuffWatcherData.Position.Y = var
+		BWmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", BuffWatcherData.Position.X, BuffWatcherData.Position.Y)
+	end,
+	
+	setAlpha = function(var)
+		if tonumber(var) == nil then
+			print("Please input a number")
+			return false
+		end
+		var = tonumber(var)
+		if var < 0 or var > 1 then
+			print("The number should be between 0 and 1")
+			return false
+		end
+		BuffWatcherData.GlobeAlpha = var
+		BWmainframe.Position:SetAlpha(var)
 	end
 	
 }

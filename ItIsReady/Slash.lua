@@ -84,6 +84,11 @@ SlashCmdList["ITISREADY"] = function (...)
 		if func(var) then 
 			print("succeeded")
 		end
+	elseif arg == "setAlpha" then 
+		local func = IRmainframe.SlashHandleFunc["setAlpha"]
+		if func(var) then
+			print("succeeded")
+		end
 	else
 		print(help_info1)
 		print(help_info2)
@@ -210,5 +215,19 @@ IRmainframe.SlashHandleFunc = {
 		var = tonumber(var)
 		ItIsReadyData.Position.Y = var
 		IRmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", ItIsReadyData.Position.X, ItIsReadyData.Position.Y)
+	end,
+	
+	setAlpha = function(var)
+		if tonumber(var) == nil then
+			print("Please input a number")
+			return false
+		end
+		var = tonumber(var)
+		if var < 0 or var > 1 then
+			print("The number should be between 0 and 1")
+			return false
+		end
+		ItIsReadyData.GlobeAlpha = var
+		IRmainframe.Position:SetAlpha(var)
 	end
 }

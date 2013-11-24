@@ -63,6 +63,9 @@ IRmainframe.HandleFunc = {
 		if ItIsReadyData.CurrentGroupName ~= "" then 
 			ItIsReadyData.CurrentGroup = ItIsReadyData.Spells[ItIsReadyData.CurrentGroupName]
 		end
+		if ItIsReadyData.GlobeAlpha == nil then
+			ItIsReadyData.GlobeAlpha = 1
+		end
 		--print("Spells:", type(ItIsReadyData["Spells"]))
 	end,
 	
@@ -81,6 +84,8 @@ IRmainframe.HandleFunc = {
 		IRmainframe.Position:SetHeight(480)
 		IRmainframe.Position:SetWidth(256)
 		IRmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", ItIsReadyData.Position.X, ItIsReadyData.Position.Y)
+		IRmainframe.Position:SetAlpha(ItIsReadyData.GlobeAlpha)
+		
 		for i,v in pairs(IRmainframe.Spells) do
 			--print(v)
 			

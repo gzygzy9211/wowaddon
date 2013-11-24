@@ -1,4 +1,4 @@
-## Interface: 50200
+## Interface: 50300
 ## Version: 0.0.2
 ## Author: Wing
 ## Title: Buff Watcher

@@ -39,7 +39,6 @@ BWmainframe.HandleFunc = {
 		local AddonName = ...
 		--print(AddonName)
 		if AddonName ~= "BuffWatcher" then return end
-		print(2)
 		--Initialize Saved Variables if Necessary
 		if BuffWatcherData == nil then 
 			BuffWatcherData = {
@@ -49,10 +48,16 @@ BWmainframe.HandleFunc = {
 				Spells = {}
 			}
 		end
+		if BuffWatcherData.Position == nil then
+			BuffWatcherData.Position = {X = 0, Y = 0}
+		end
 		if BuffWatcherData.CurrentGroupName ~= "" then 
 			BuffWatcherData.CurrentGroup = BuffWatcherData.Spells[BuffWatcherData.CurrentGroupName]
 		end
-		print("Spells:", type(BuffWatcherData["Spells"]))
+		if BuffWatcherData.GlobeAlpha == nil then
+			BuffWatcherData.GlobeAlpha = 1
+		end
+		--print("Spells:", type(BuffWatcherData["Spells"]))
 	end,
 	
 	PLAYER_LOGIN = function (self, ...)
@@ -64,11 +69,16 @@ BWmainframe.HandleFunc = {
 			BWmainframe.Spells = {}
 		end
 		BWmainframe.Icons = {}
+		BWmainframe.Position = CreateFrame("Frame", nil, BWmainframe)
+		BWmainframe.Position:SetHeight(480)
+		BWmainframe.Position:SetWidth(256)
+		BWmainframe.Position:SetPoint("CENTER", UIParent, "CENTER", BuffWatcherData.Position.X, BuffWatcherData.Position.Y)
+		BWmainframe.Position:SetAlpha(BuffWatcherData.GlobeAlpha)
 		
 		for i,v in pairs(BWmainframe.Spells) do
 			--print(v)
 			
-			BWmainframe.Icons[i] = CreateFrame("Frame", nil, BWmainframe)
+			BWmainframe.Icons[i] = CreateFrame("Frame", nil, BWmainframe.Position)
 			BWmainframe.Icons[i]:SetWidth(48)
 			BWmainframe.Icons[i]:SetHeight(48)
 			BWmainframe.Icons[i]:SetBackdrop({ 
@@ -79,7 +89,7 @@ BWmainframe.HandleFunc = {
 			})
 			BWmainframe.Icons[i]:SetBackdropColor(0, 0, 0, 0)
 			BWmainframe.Icons[i]:SetBackdropBorderColor(0, 0, 0, 0)
-			BWmainframe.Icons[i]:SetPoint("CENTER", UIParent, "CENTER", 48*i - 144, -96)
+			BWmainframe.Icons[i]:SetPoint("CENTER", BWmainframe.Position, "CENTER", 48*i - 144, -96)
 			local name, _, icon = GetSpellInfo(v)
 			
 			--print(icon)
