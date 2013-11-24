@@ -1,5 +1,5 @@
-## Interface: 50300
-## Version: 0.0.2
+## Interface: 50400
+## Version: 0.0.3
 ## Author: Wing
 ## Title: It is Ready
 ## Notes: Show you which spell is ready
