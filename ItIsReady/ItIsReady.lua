@@ -136,24 +136,37 @@ IRmainframe.HandleFunc = {
 	
 	ON_UPDATE = function(elapsed)
 		local i, v, c
+		local t = GetTime() + 0.4
 		for i,c in pairs(IRmainframe.Icons) do
 			v = IRmainframe.Spells[i]
-			local _, length = GetSpellCooldown(v)
-			if length == 0 and not IRmainframe.Icons[i]:IsShown() then
-				IRmainframe.Icons[i]:Show()
-				IRmainframe.Cooldown[i] = 0
-			elseif--[[ IRmainframe.Cooldown[i] == 1 and ]]length >= 2 then
-				IRmainframe.Cooldown[i] = length
+			local name = GetSpellInfo(v)
+			if IsUsableSpell(name) == nil then
 				if IRmainframe.Icons[i]:IsShown() then 
 					IRmainframe.Icons[i]:Hide()
 				end
-			elseif length < 2 then
-				IRmainframe.Cooldown[i] = length;
-				if IRmainframe.Cooldown[i] <= length then 
-					IRmainframe.Icons[i]:Show()
+			else
+				local start, length = GetSpellCooldown(v)
+				if length == 0 then
 					IRmainframe.Cooldown[i] = 0
+				else 
+					IRmainframe.Cooldown[i] = length + start
+				end
+				if t + 1.1>= IRmainframe.Cooldown[i] then
+					if not IRmainframe.Icons[i]:IsShown() then 
+						IRmainframe.Icons[i]:Show()
+					end
+				else
+					if IRmainframe.Icons[i]:IsShown() then 
+						IRmainframe.Icons[i]:Hide()
+					end
+				end
+				if t >= IRmainframe.Cooldown[i] then 
+					IRmainframe.Icons[i]:SetAlpha(1)
+				else
+					IRmainframe.Icons[i]:SetAlpha(0.5)
 				end
 			end
+		
 		end
 	end
 
