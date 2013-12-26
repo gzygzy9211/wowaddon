@@ -140,7 +140,8 @@ IRmainframe.HandleFunc = {
 		for i,c in pairs(IRmainframe.Icons) do
 			v = IRmainframe.Spells[i]
 			local name = GetSpellInfo(v)
-			if IsUsableSpell(name) == nil then
+			local usable, notEnoughRes = IsUsableSpell(name)
+			if usable == nil and notEnoughRes == nil then
 				if IRmainframe.Icons[i]:IsShown() then 
 					IRmainframe.Icons[i]:Hide()
 				end
